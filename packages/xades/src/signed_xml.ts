@@ -210,7 +210,12 @@ export class SignedXml extends XmlDSigJs.SignedXml {
       const signingAlg = XmlCore.assign({}, algorithm, key.algorithm);
       const xadesRefHash = signingAlg.hash;
       const xadesRef = new XmlDSigJs.Reference();
-
+      
+      //Add c14n-transform
+      const propTransform = new XmlDSigJs.XmlDsigC14NTransform();
+      xadesRef.Transforms.Add(propTransform);
+      //End of modification
+      
       xadesRef.Type = XADES_REFERENCE_TYPE;
       xadesRef.Uri = `#${this.Properties.SignedProperties.Id}`;
       xadesRef.DigestMethod.Algorithm =
